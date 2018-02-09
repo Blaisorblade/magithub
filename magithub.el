@@ -246,6 +246,7 @@ See also `magithub-preferred-remote-method'."
 
   (let-alist repo
     (when (magithub-confirm-no-error 'clone .full_name dir)
+      (mkdir dir t)
       (let ((default-directory dir)
             (magit-clone-set-remote.pushDefault t)
             set-upstream set-proxy)
@@ -258,7 +259,6 @@ See also `magithub-preferred-remote-method'."
 
         (condition-case _
             (progn
-              (mkdir dir t)
               (magit-clone (magithub-repo--clone-url repo) dir)
               (while (process-live-p magit-this-process)
                 (magit-process-buffer)
